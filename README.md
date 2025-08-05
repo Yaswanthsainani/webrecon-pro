@@ -23,7 +23,7 @@ Here's a comprehensive **README.md** for your WebRecon Pro project with clear re
 ```bash
 git clone https://github.com/Yaswanthsainani/webrecon-pro.git
 cd webrecon-pro
-chmod +x src/webrecon.sh
+chmod +x /webrecon.sh
 ```
 
 ### Configuration
@@ -47,9 +47,9 @@ echo "SLACK_WEBHOOK=https://hooks.slack.com/services/YOUR/KEY" >> .env
 ### Key Variables to Adjust
 | Variable | File | Purpose |
 |----------|------|---------|
-| `CONCURRENCY` | `src/webrecon.sh` | Parallel scans (Default: 3) |
-| `TIMEOUT` | `src/webrecon.sh` | Per-domain timeout in seconds |
-| `GF_PATTERNS` | `src/webrecon.sh` | Vulnerability patterns to check |
+| `CONCURRENCY` | `/webrecon.sh` | Parallel scans (Default: 3) |
+| `TIMEOUT` | `/webrecon.sh` | Per-domain timeout in seconds |
+| `GF_PATTERNS` | `/webrecon.sh` | Vulnerability patterns to check |
 
 ### Template Paths
 ```bash
@@ -62,12 +62,12 @@ NUCLEI_EXPOSURES_TEMPLATES="$HOME/custom-templates/exposures"
 
 ### Basic Scan
 ```bash
-./src/webrecon.sh -t example.com
+./webrecon.sh -t example.com
 ```
 
 ### Advanced Options
 ```bash
-./src/webrecon.sh \
+./webrecon.sh \
   -f targets.txt \    # File with domains
   -c 5 \             # 5 concurrent scans
   -o /mnt/scans \    # Custom output directory
