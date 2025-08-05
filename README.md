@@ -1,91 +1,110 @@
-
-
-### 📝 **README.md Structure** (Copy-Paste Ready)
+Here's a comprehensive **README.md** for your WebRecon Pro project with clear requirements, installation, and customization guidance:
 
 ```markdown
-# 🔍 WebRecon Pro - Enterprise DAST Scanner
+# WebRecon Pro - Enterprise DAST Scanner
 
-![GitHub Actions](https://img.shields.io/github/actions/workflow/status/yourname/webrecon-pro/ci.yml)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![GitHub](https://img.shields.io/badge/Shell_5.1%2B-Required-blue)
+![Nuclei](https://img.shields.io/badge/Nuclei_2.8%2B-Required-red)
 
-> Automated web vulnerability scanning at scale
+## 🔧 Requirements
 
-## 🚀 Features
-- **Military-Grade Discovery** - Waymore + Nuclei integration
-- **Smart Filtering** - 92% fewer false positives vs. commercial tools
-- **Slack/Teams Alerts** - Real-time findings delivery
+### Core Dependencies
+| Tool | Minimum Version | Installation |
+|------|-----------------|--------------|
+| [Waymore](https://github.com/xnl-h4ck3r/waymore) | v1.2 | `pip install waymore` |
+| [Nuclei](https://github.com/projectdiscovery/nuclei) | v2.8.0 | `go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest` |
+| [GF](https://github.com/tomnomnom/gf) | Latest | `go install github.com/tomnomnom/gf@latest` |
+| jq | 1.6 | `sudo apt install jq` |
 
-## 💻 Quick Start
+
+## 🚀 Installation
+
+### Basic Setup
 ```bash
-# Install dependencies
-sudo apt install -y jq nuclei waymore
-
-# Run scan
-./webrecon.sh -t target.com -c 5
+git clone https://github.com/Yaswanthsainani/webrecon-pro.git
+cd webrecon-pro
+chmod +x src/webrecon.sh
 ```
 
-## 📊 Sample Report
-```text
-[CRITICAL] SQLi @ https://api.target.com/search?q=1'
-[XSS] Reflected @ https://app.target.com/?redirect=javascript:
+### Configuration
+1. **Edit config.yaml**:
+```yaml
+# ~/webrecon-pro/configs/waymore.yaml
+threads: 15
+timeout: 45
+exclude:
+  - "*.png"
+  - "*.css"
 ```
 
-## 🛠 Configuration
-| Flag          | Description                          |
-|---------------|--------------------------------------|
-| `-c <int>`    | Concurrency (Default: 3)            |
-| `-t <target>` | Single domain or file                |
-| `-w <path>`   | Custom wordlist                      |
+2. **Set Slack Webhook**:
+```bash
+echo "SLACK_WEBHOOK=https://hooks.slack.com/services/YOUR/KEY" >> .env
+```
 
-## 📜 License
-MIT © [Yaswanth Sai]
+## 🛠 Custom Modifications
+
+### Key Variables to Adjust
+| Variable | File | Purpose |
+|----------|------|---------|
+| `CONCURRENCY` | `src/webrecon.sh` | Parallel scans (Default: 3) |
+| `TIMEOUT` | `src/webrecon.sh` | Per-domain timeout in seconds |
+| `GF_PATTERNS` | `src/webrecon.sh` | Vulnerability patterns to check |
+
+### Template Paths
+```bash
+# Change template directories:
+NUCLEI_DAST_TEMPLATES="$HOME/custom-templates/dast"
+NUCLEI_EXPOSURES_TEMPLATES="$HOME/custom-templates/exposures"
+```
+
+## 🏃 Running the Scanner
+
+### Basic Scan
+```bash
+./src/webrecon.sh -t example.com
+```
+
+### Advanced Options
+```bash
+./src/webrecon.sh \
+  -f targets.txt \    # File with domains
+  -c 5 \             # 5 concurrent scans
+  -o /mnt/scans \    # Custom output directory
+  -v 3               # Maximum verbosity
+```
+
+## 📊 Expected Output
+```
+scan_results/
+└── example.com/
+    ├── nuclei_dast_results.txt
+    ├── sensitive_files.txt
+    └── scan.log
+```
+
+## 🚨 Troubleshooting
+**Error** | **Solution**
+----------|------------
+`waymore not found` | `export PATH=$PATH:~/.local/bin`
+No URLs detected | Increase timeout in `config.yaml`
+Slack alerts failing | Verify webhook URL in `.env`
 
 ---
 
-### 🎯 **Key Additions for Professional Credibility**
-1. **Benchmark Data**  
-   Add a `BENCHMARKS.md` with:
-   ```text
-   Comparative Scan Times (100 targets):
-   - WebRecon Pro: 18m23s
-   - Nuclei Alone: 42m11s
-   ```
+> **Pro Tip**: For AWS deployment, use `nohup ./webrecon.sh -f targets.txt &` to run detached sessions.
+```
 
-2. **Demo GIF**  
-   Record a terminal session showing:
-   ```bash
-   ./webrecon.sh -t vuln.website
-   ```
+### Key Features of This README:
+1. **Visual Badges** - Quick version requirements
+2. **Structured Tables** - Easy-to-scan requirements
+3. **Copy-Paste Ready** - Directly executable commands
+4. **Troubleshooting Section** - Common issues fixed
+5. **Customization Guide** - Key variables highlighted
 
-3. **Testimonials Section**  
-   ```markdown
-   ## 🏆 User Feedback
-   > "Found 3 critical bugs our $50k/yr scanner missed"  
-   > — Security Lead @ Fortune 500
-   ```
+### Recommended Additions:
+1. Add a `demo.gif` showing the scan in action
+2. Include a `Vagrantfile` for quick testing environments
+3. Add a `Dockerfile` for containerized deployment
 
-4. **Integration Badges**  
-   ```markdown
-   [![Integration](https://img.shields.io/badge/Slack-Compatible-green)]()
-   [![Compatibility](https://img.shields.io/badge/Nuclei-2.8%2B-blue)]()
-   ```
-
----
-
-### 💡 **Pro Tips**
-1. **Use Cases Section**  
-   ```markdown
-   ## 🎯 Ideal For:
-   - Continuous penetration testing
-   - Bug bounty recon phases
-   - Compliance audits (ISO27001/SOC2)
-   ```
-
-2. **Roadmap**  
-   ```markdown
-   ## 🛣 Roadmap
-   - [x] Slack integration
-   - [ ] JIRA plugin (Q4 2023)
-   - [ ] AWS Lambda deployment
-   ```
-
+Would you like me to generate any of these additional files?
