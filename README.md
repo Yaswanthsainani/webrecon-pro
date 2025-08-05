@@ -1,21 +1,4 @@
-Here's a concise checklist of what to include in your GitHub repository for maximum impact:
 
-### 📂 **Repository Essentials**
-1. **Core Files**
-   - `webrecon.sh` 
-   - `config.yaml` 
-   - `.github/workflows/ci.yml` 
-
-2. **Documentation**
-   - `README.md` (Use template below)
-   - `SETUP.md` (Detailed installation)
-   - `SAMPLES.md` (Example outputs)
-
-3. **Support Files**
-   - `wordlists/` (Common patterns)
-   - `templates/` (Custom Nuclei templates)
-
----
 
 ### 📝 **README.md Structure** (Copy-Paste Ready)
 
